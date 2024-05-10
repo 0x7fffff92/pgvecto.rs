@@ -41,7 +41,7 @@ jobs:
   binary:
     strategy:
       matrix:
-        version: [14, 15, 16]
+        version: [14-bullseye, 15-bullseys, 16-bullseys]
         arch: ["x86_64", "aarch64"]
     runs-on: ubuntu-20.04
     env:
