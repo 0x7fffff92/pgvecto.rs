@@ -119,7 +119,7 @@ jobs:
     needs: ["binary", "semver"]
     strategy:
       matrix:
-        version: [14, 15, 16]
+        version: [14-bullseye, 15-bullseys, 16-bullseys]
         platform: ["amd64", "arm64"]
     runs-on: ubuntu-latest
     steps:
@@ -146,13 +146,13 @@ jobs:
           push: true
           platforms: "linux/${{ matrix.platform }}"
           file: ./docker/binary_release.Dockerfile
-          tags: tensorchord/pgvecto-rs-binary:pg${{ matrix.version }}-v${{ github.event.inputs.version }}-${{ matrix.platform }}
+          tags: libtorrent/pgvecto-rs-binary:pg${{ matrix.version }}-v${{ github.event.inputs.version }}-${{ matrix.platform }}
   docker_release:
     needs: ["docker_binary_release", "semver"]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [14, 15, 16]
+        version: [14-bullseye, 15-bullseye, 16-bullseye]
         rootless: [true, false]
     steps:
       - name: Checkout
@@ -163,9 +163,9 @@ jobs:
         with:
           script: |
             if ("${{ matrix.rootless }}" == "true") {
-              core.setOutput('tags', "tensorchord/pgvecto-rs:pg${{ matrix.version }}-v${{ github.event.inputs.version }}-rootless");
+              core.setOutput('tags', "libtorrent/pgvecto-rs:pg${{ matrix.version }}-v${{ github.event.inputs.version }}-rootless");
             } else {
-              core.setOutput('tags', "tensorchord/pgvecto-rs:pg${{ matrix.version }}-v${{ github.event.inputs.version }}");
+              core.setOutput('tags', "libtorrent/pgvecto-rs:pg${{ matrix.version }}-v${{ github.event.inputs.version }}");
             }
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
